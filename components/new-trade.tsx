@@ -93,9 +93,11 @@ export const NewTrade = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="ghost">
-                    <Plus className="w-4 h-4 mr-2" />
-                    New Trade
+                <Button variant="default">
+                    <Plus className="w-6 h-6 mr-2" />
+                    <p className="text-lg">
+                        Add Trade
+                    </p>
                 </Button>
             </DialogTrigger>
             <DialogContent>

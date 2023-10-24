@@ -11,7 +11,7 @@ const DashboardPage = async () => {
     return (
         <div className="flex flex-col py-8 items-center justify-between">
             <div className="w-full flex items-center justify-between mb-4">
-                <h1 className="text-2xl">Dashboard</h1>
+                <h1 className="text-3xl font-bold">Dashboard</h1>
                 <NewTrade />
             </div>
             <DataTable columns={columns} data={trades} />

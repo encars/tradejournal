@@ -2,9 +2,9 @@
 
 import { Trade } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
-import { Minus, MoreHorizontal, Plus } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
 export const columns: ColumnDef<Trade>[] = [
     {
@@ -67,7 +67,16 @@ export const columns: ColumnDef<Trade>[] = [
     },
     {
         accessorKey: "pnl",
-        header: () => <div className="text-right">PnL</div>,
+        header: ({ column }) => {
+            return (
+                <div className="text-right">
+                    <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                        PnL
+                        <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                </div>
+            )
+        },
         cell: ({ row }) => {
             const pnl = parseFloat(row.getValue("pnl")) || 0;
 
@@ -107,13 +116,6 @@ export const columns: ColumnDef<Trade>[] = [
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>
-                                Actions
-                            </DropdownMenuLabel>
-                            <DropdownMenuItem onClick={() => { }}>
-                                Set exit price
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
                             <DropdownMenuItem onClick={() => { }}>
                                 Delete
                             </DropdownMenuItem>
