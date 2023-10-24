@@ -60,6 +60,7 @@ export const NewTrade = () => {
             setIsSubmitting(true);
             const res = await axios.post("/api/trades", {
                 ...values,
+                isOpen: !values.exitPrice,
                 pnl: calculatePnl(),
             });
     
@@ -94,8 +95,8 @@ export const NewTrade = () => {
         <Dialog>
             <DialogTrigger asChild>
                 <Button variant="default">
-                    <Plus className="w-6 h-6 mr-2" />
-                    <p className="text-lg">
+                    <Plus className="w-5 h-5 mr-2" />
+                    <p className="text-base">
                         Add Trade
                     </p>
                 </Button>

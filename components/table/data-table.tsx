@@ -2,9 +2,11 @@
 
 import {
     ColumnDef,
+    ColumnFiltersState,
     SortingState,
     flexRender,
     getCoreRowModel,
+    getFilteredRowModel,
     getPaginationRowModel,
     getSortedRowModel,
     useReactTable,
@@ -20,6 +22,8 @@ import {
 } from "@/components/ui/table"
 import { Button } from "../ui/button"
 import { useState } from "react"
+import { Input } from "../ui/input"
+import { NewTrade } from "../new-trade"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -31,6 +35,7 @@ export function DataTable<TData, TValue>({
     data,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([]);
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
     const table = useReactTable({
         data,
@@ -39,13 +44,25 @@ export function DataTable<TData, TValue>({
         getPaginationRowModel: getPaginationRowModel(),
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
+        onColumnFiltersChange: setColumnFilters,
+        getFilteredRowModel: getFilteredRowModel(),
         state: {
             sorting,
+            columnFilters,
         },
     });
 
     return (
         <div className="w-full">
+            <div className="flex items-center justify-between py-4">
+                <Input
+                    placeholder="Filter trades by symbol..."
+                    value={(table.getColumn("symbol")?.getFilterValue() as string) ?? ""}
+                    onChange={(event) => table.getColumn("symbol")?.setFilterValue(event.target.value)}
+                    className="max-w-sm"
+                />
+                <NewTrade />
+            </div>
             <div className="rounded-md border">
                 <Table>
                     <TableHeader>

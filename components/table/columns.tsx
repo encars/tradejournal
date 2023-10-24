@@ -54,7 +54,7 @@ export const columns: ColumnDef<Trade>[] = [
             const price = parseFloat(row.getValue("exitPrice")) || ""
 
             if (!price) {
-                return <div className="text-right">Not set</div>
+                return <div className="text-right">-</div>
             }
 
             const formatted = new Intl.NumberFormat("de-DE", {
@@ -116,6 +116,11 @@ export const columns: ColumnDef<Trade>[] = [
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
+                            {trade.isOpen && (
+                                <DropdownMenuItem onClick={() => { }}>
+                                    Close Trade
+                                </DropdownMenuItem>
+                            )}
                             <DropdownMenuItem onClick={() => { }}>
                                 Delete
                             </DropdownMenuItem>

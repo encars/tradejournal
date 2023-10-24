@@ -32,7 +32,7 @@ model Trade {
   tradeDate  DateTime
   closeDate  DateTime?
   isOpen     Boolean  @default(true)
-  pnl        Float?
+  pnl        Float    @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
