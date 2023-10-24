@@ -22,7 +22,7 @@ export default function RootLayout({
 			<body className={inter.className}>
 				<Providers>
 					<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-						<main className="h-screen p-4">
+						<main className="h-screen">
 							{children}
 						</main>
 						<Toaster />

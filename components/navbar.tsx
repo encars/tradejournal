@@ -13,9 +13,9 @@ export const Navbar = () => {
     const pathname = usePathname();
 
     return (
-        <nav className="flex items-center justify-between pb-4 border-b border-muted-foreground">
+        <nav className="flex items-center justify-between p-4 border-b border-muted-foreground">
             <div className="flex items-center">
-                <Link href="/" className="flex items-center space-x-2 mr-32">
+                <Link href="/dashboard" className="flex items-center space-x-2 mr-32">
                     <DollarSign className="w-8 h-8" />
                     <p className="text-xl font-bold">
                         Trade Journal
