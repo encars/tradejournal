@@ -7,6 +7,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "./ui/button";
 import { signOut } from "next-auth/react";
+import { ModeToggle } from "./mode-toggle";
 
 export const Navbar = () => {
     const pathname = usePathname();
@@ -22,15 +23,18 @@ export const Navbar = () => {
                 </Link>
                 <ul className="flex items-center space-x-8">
                     {navLinks.map((link) => (
-                        <Link href={link.href} key={link.key} className={cn("text-muted-foreground transition duration-300 hover:text-primary-foreground", pathname === link.href && "text-primary-foreground")}>
+                        <Link href={link.href} key={link.key} className={cn("text-muted-foreground transition duration-300 hover:text-primary", pathname === link.href && "text-primary")}>
                             {link.label}
                         </Link>
                     ))}
                 </ul>
             </div>
-            <Button onClick={() => signOut()} variant="secondary">
-                Sign Out
-            </Button>
+            <div className="flex items-center space-x-4">
+                <ModeToggle />
+                <Button onClick={() => signOut()} variant="secondary">
+                    Sign Out
+                </Button>
+            </div>
         </nav>
     )
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarIcon, Plus } from "lucide-react"
+import { CalendarIcon, Loader2, Plus } from "lucide-react"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
 import { Button } from "./ui/button"
 import { z } from "zod"
@@ -12,6 +12,9 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Calendar } from "./ui/calendar";
+import axios from "axios";
+import { toast } from "./ui/use-toast";
+import { useState } from "react";
 
 const tradeSchema = z.object({
     asset: z.string().min(1, "Asset name is required").max(255),
@@ -22,6 +25,8 @@ const tradeSchema = z.object({
 })
 
 export const NewTrade = () => {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const form = useForm<z.infer<typeof tradeSchema>>({
         resolver: zodResolver(tradeSchema),
         defaultValues: {
@@ -32,14 +37,41 @@ export const NewTrade = () => {
         },
     });
 
-    const onSubmit = (values: z.infer<typeof tradeSchema>) => {
-        console.log(values);
+    const onSubmit = async (values: z.infer<typeof tradeSchema>) => {
+        try {
+            setIsSubmitting(true);
+            const res = await axios.post("/api/trades", values);
+    
+            if (res.status === 201) {
+                form.reset();
+                toast({
+                    title: "Trade added!",
+                    description: `Your ${values.asset} trade has been added successfully!`,
+                    variant: "success"
+                })
+            } else {
+                toast({
+                    title: "Error",
+                    description: "Something went wrong. Please try again later.",
+                    variant: "destructive"
+                });
+            }
+        } catch (error) {
+            console.error(error);
+            toast({
+                title: "Error",
+                description: "Something went wrong. Please try again later.",
+                variant: "destructive"
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="secondary">
+                <Button variant="ghost">
                     <Plus className="w-4 h-4 mr-2" />
                     New Trade
                 </Button>
@@ -100,7 +132,7 @@ export const NewTrade = () => {
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>
-                                            Entry Price
+                                            Entry Price (€)
                                         </FormLabel>
                                         <FormControl>
                                             <Input type="number" {...field} />
@@ -165,8 +197,17 @@ export const NewTrade = () => {
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit">
-                            Submit
+                        <Button type="submit" className="w-full">
+                            {isSubmitting ? (
+                                <>
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    Submitting...
+                                </>
+                            ) : (
+                                <>
+                                    Submit
+                                </>
+                            )}
                         </Button>
                     </form>
                 </Form>
