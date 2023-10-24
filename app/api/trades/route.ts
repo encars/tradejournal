@@ -6,7 +6,7 @@ export async function POST (req: Request) {
     try {
         const user = await getUser();
 
-        const { asset, entryPrice, quantity, symbol, tradeDate } = await req.json();
+        const { asset, entryPrice, exitPrice, quantity, symbol, tradeDate, pnl } = await req.json();
 
         if (!user) {
             return new NextResponse("Unauthorized", { status: 401 });
@@ -16,9 +16,11 @@ export async function POST (req: Request) {
             data: {
                 asset,
                 entryPrice,
+                exitPrice,
                 quantity,
                 symbol,
                 tradeDate,
+                pnl,
                 userId: user.id
             },
         });

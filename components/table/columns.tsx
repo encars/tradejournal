@@ -74,19 +74,19 @@ export const columns: ColumnDef<Trade>[] = [
             if (pnl > 0) {
                 return (
                     <div className="text-right text-green-500">
-                        +{pnl.toFixed(2)} €
+                        +{pnl} €
                     </div>
                 );
             } else if (pnl < 0) {
                 return (
                     <div className="text-right text-red-500">
-                        {pnl.toFixed(2)} €
+                        {pnl} €
                     </div>
                 )
             } else {
                 return (
                     <div className="text-right">
-                        {pnl.toFixed(2)} €
+                        {pnl} €
                     </div>
                 );
             }
