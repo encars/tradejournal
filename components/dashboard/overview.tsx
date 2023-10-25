@@ -1,7 +1,8 @@
-import { Trade, User } from "@prisma/client";
-import { InfoCard } from "./info-card";
+import { User } from "@prisma/client";
 import { CandlestickChart, DollarSign, PieChart, Timer, TrendingUp } from "lucide-react";
+
 import getAnalytics from "@/actions/get-analytics";
+import { InfoCard } from "./info-card";
 
 interface OverviewProps {
     user: User;

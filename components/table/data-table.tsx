@@ -23,7 +23,7 @@ import {
 import { Button } from "../ui/button"
 import { useState } from "react"
 import { Input } from "../ui/input"
-import { NewTrade } from "../new-trade"
+import { NewTrade } from "../dashboard/new-trade"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
