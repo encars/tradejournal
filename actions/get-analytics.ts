@@ -27,7 +27,7 @@ const getAnalytics = async (userId: string) => {
     const numberOfTrades = trades.length;
     const numberOfClosedTrades = trades.filter(trade => !trade.isOpen).length;
     const profitFactor = totalProfit / totalLoss;
-    const averagePnl = numberOfClosedTrades ? (totalProfit - totalLoss) / numberOfClosedTrades : 0;
+    const averagePnl = numberOfClosedTrades ? Number(((totalProfit - totalLoss) / numberOfClosedTrades).toFixed(2)) : 0;
 
     return {
         depotValue,

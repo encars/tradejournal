@@ -35,6 +35,43 @@ export const columns: ColumnDef<Trade>[] = [
         }
     },
     {
+        accessorKey: "closeDate",
+        header: () => <div className="text-right">Exit Date</div>,
+        cell: ({ row }) => {
+            const date = new Date(row.getValue("closeDate"))
+
+            if (!date) {
+                return <div className="text-right">-</div>
+            }
+
+            const formatted = new Intl.DateTimeFormat("de-DE").format(date)
+
+            return <div className="text-right">{formatted}</div>
+        }
+    },
+    {
+        accessorKey: "isOpen",
+        header: ({ column }) => {
+            return (
+                <div className="text-right">
+                    <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                        Status
+                        <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                </div>
+            )
+        },
+        cell: ({ row }) => {
+            const isOpen = row.getValue("isOpen")
+
+            if (isOpen) {
+                return <div className="text-right text-green-500">Open</div>
+            } else {
+                return <div className="text-right text-red-500">Closed</div>
+            }
+        }
+    },
+    {
         accessorKey: "entryPrice",
         header: () => <div className="text-right">Entry Price</div>,
         cell: ({ row }) => {
@@ -95,16 +132,36 @@ export const columns: ColumnDef<Trade>[] = [
             } else {
                 return (
                     <div className="text-right">
-                        {pnl} €
+                        -
                     </div>
                 );
             }
         }
     },
     {
-    id: "actions",
+        accessorKey: "duration",
+        header: () => <div className="text-right">Duration</div>,
         cell: ({ row }) => {
-            const trade = row.original;
+            const tradeDate = new Date(row.getValue("tradeDate"));
+            const closeDate = row.getValue("closeDate") ? new Date(row.getValue("closeDate")) : null;
+
+            if (!closeDate) {
+                return <div className="text-right">-</div>
+                    }
+
+                    const duration = closeDate.getTime() - tradeDate.getTime();
+
+                    const days = Math.floor(duration / (1000 * 60 * 60 * 24));
+
+                    const formattedDuration = days === 1 ? `${days} day` : `${days} days`;
+
+                    return <div className="text-right">{formattedDuration}</div>
+                }
+            },
+            {
+            id: "actions",
+                cell: ({ row }) => {
+                    const trade = row.original;
 
             return (
                 <div className="text-right">

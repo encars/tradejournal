@@ -24,8 +24,30 @@ const tradeSchema = z.object({
     exitPrice: z.coerce.number().optional(),
     quantity: z.coerce.number().min(1, "Quantity is required"),
     tradeDate: z.date(),
+    closeDate: z.date().optional(),
     pnl: z.coerce.number().optional(),
-})
+}).superRefine((data, ctx) => {
+    if (!!data.closeDate && !data.exitPrice) {
+        ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["exitPrice"],
+            message: "Both exit price and close date must be filled, or neither.",
+        });
+    } else if (!data.closeDate && !!data.exitPrice) {
+        ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["closeDate"],
+            message: "Both exit price and close date must be filled, or neither.",
+        });
+    }
+    if (data.closeDate && data.tradeDate && data.closeDate < data.tradeDate) {
+        ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["closeDate"],
+            message: "Close date must be after trade date.",
+        });
+    }
+});
 
 export const NewTrade = () => {
     const router = useRouter();
@@ -63,7 +85,7 @@ export const NewTrade = () => {
                 isOpen: !values.exitPrice,
                 pnl: calculatePnl(),
             });
-    
+
             if (res.status === 201) {
                 form.reset();
                 toast({
@@ -186,31 +208,11 @@ export const NewTrade = () => {
                             />
                             <FormField
                                 control={form.control}
-                                name="exitPrice"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>
-                                            Exit Price (€) <span className="ml-4 text-sm text-muted-foreground">(optional)</span>
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input type="number" {...field} />
-                                        </FormControl>
-                                        <FormDescription>
-                                            Price trade was exited at.
-                                        </FormDescription>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                        <div className="flex items-center space-x-4">
-                            <FormField
-                                control={form.control}
                                 name="tradeDate"
                                 render={({ field }) => (
-                                    <FormItem>
+                                    <FormItem className="w-[70%]">
                                         <FormLabel>
-                                            Trade Date
+                                            Entry Date
                                         </FormLabel>
                                         <Popover>
                                             <PopoverTrigger asChild>
@@ -238,29 +240,83 @@ export const NewTrade = () => {
                                     </FormItem>
                                 )}
                             />
+                        </div>
+                        <div className="flex items-center space-x-4">
+                        <FormField
+                            control={form.control}
+                            name="exitPrice"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>
+                                        Exit Price (€) <span className="ml-2 text-sm text-muted-foreground">(optional)</span>
+                                    </FormLabel>
+                                    <FormControl>
+                                        <Input type="number" {...field} />
+                                    </FormControl>
+                                    <FormDescription>
+                                        Price trade was exited at.
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                             <FormField
                                 control={form.control}
-                                name="pnl"
+                                name="closeDate"
                                 render={({ field }) => (
-                                    <FormItem>
+                                    <FormItem className="w-[70%]">
                                         <FormLabel>
-                                            PnL (€)
+                                            Close Date <span className="ml-4 text-sm text-muted-foreground">(optional)</span>
                                         </FormLabel>
-                                        <FormControl>
-                                            {calculatePnl() ? (
-                                                <Input type="number" {...field} value={calculatePnl()} disabled />
-                                            ) : (
-                                                <Input type="number" {...field} disabled />
-                                            )}
-                                        </FormControl>
+                                        <Popover>
+                                            <PopoverTrigger asChild>
+                                                <FormControl>
+                                                    <Button variant="outline" className={cn("w-[280px] justify-start text-left font-normal", !field.value && "text-muted-foreground")}>
+                                                        <CalendarIcon className="w-4 h-4 mr-2" />
+                                                        {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                                                    </Button>
+                                                </FormControl>
+                                            </PopoverTrigger>
+                                            <PopoverContent className="w-auto p-0" align="start">
+                                                <Calendar
+                                                    mode="single"
+                                                    selected={field.value}
+                                                    onSelect={field.onChange}
+                                                    disabled={(date) => date > new Date() || date < new Date("1900-01-01") || date < form.watch("tradeDate")}
+                                                    initialFocus
+                                                />
+                                            </PopoverContent>
+                                        </Popover>
                                         <FormDescription>
-                                            Calculated PnL.
+                                            Date of trade exit.
                                         </FormDescription>
                                         <FormMessage />
                                     </FormItem>
                                 )}
                             />
                         </div>
+                        <FormField
+                            control={form.control}
+                            name="pnl"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>
+                                        PnL (€)
+                                    </FormLabel>
+                                    <FormControl>
+                                        {calculatePnl() ? (
+                                            <Input type="number" {...field} value={calculatePnl()} disabled />
+                                        ) : (
+                                            <Input type="number" {...field} disabled />
+                                        )}
+                                    </FormControl>
+                                    <FormDescription>
+                                        Calculated PnL.
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                         <Button type="submit" className="w-full">
                             {isSubmitting ? (
                                 <>
