@@ -8,5 +8,10 @@ export const navLinks = [
         href: "/analytics",
         key: "analytics",
         label: "Analytics",
-    }
+    },
+    {
+        href: "/settings",
+        key: "settings",
+        label: "Settings",
+    },
 ]

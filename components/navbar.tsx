@@ -2,12 +2,12 @@
 
 import { cn } from "@/lib/utils";
 import { navLinks } from "@/settings/site";
-import { DollarSign } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "./ui/button";
 import { signOut } from "next-auth/react";
 import { ModeToggle } from "./mode-toggle";
+import Image from "next/image";
 
 export const Navbar = () => {
     const pathname = usePathname();
@@ -16,7 +16,7 @@ export const Navbar = () => {
         <nav className="flex items-center justify-between p-4 border-b border-muted-foreground">
             <div className="flex items-center">
                 <Link href="/dashboard" className="flex items-center space-x-2 mr-32">
-                    <DollarSign className="w-8 h-8" />
+                    <Image src="/tjLogoNoBg.png" alt="logo" width={48} height={48} className="mx-2" />
                     <p className="text-xl font-bold">
                         Trade Journal
                     </p>

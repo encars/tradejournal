@@ -10,6 +10,7 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import axios from "axios";
+import Image from "next/image";
 
 export const Auth = () => {
     const router = useRouter();
@@ -85,6 +86,7 @@ export const Auth = () => {
                 <>
                     <div className="flex flex-col space-y-2 mb-4">
                         <div className="flex flex-col items-center justify-between mb-4">
+                            <Image src="/tjLogoNoBg.png" alt="logo" width={128} height={128} className="mb-4" />
                             <h1 className="text-primary-foreground text-3xl">
                                 Trade Journal
                             </h1>
@@ -136,6 +138,7 @@ export const Auth = () => {
                 <>
                     <div className="flex flex-col space-y-2 mb-4">
                         <div className="flex flex-col items-center justify-between mb-4">
+                            <Image src="/tjLogoNoBg.png" alt="logo" width={128} height={128} className="mb-4" />
                             <h1 className="text-primary-foreground text-3xl">
                                 Trade Journal
                             </h1>
