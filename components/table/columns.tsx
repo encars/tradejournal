@@ -17,12 +17,7 @@ export const columns: ColumnDef<Trade>[] = [
     },
     {
         accessorKey: "quantity",
-        header: () => <div className="text-right">Quantity</div>,
-        cell: ({ row }) => {
-            const quantity = parseFloat(row.getValue("quantity"))
-
-            return <div className="text-right">{quantity}</div>
-        }
+        header: "Quantity",
     },
     {
         accessorKey: "tradeDate",
