@@ -74,8 +74,9 @@ export const NewTrade = () => {
             return;
         }
 
-        return (exitPrice - entryPrice) * quantity;
-    }
+        const pnl = (exitPrice - entryPrice) * quantity;
+        return Number(pnl.toFixed(2));
+    };
 
     const onSubmit = async (values: z.infer<typeof tradeSchema>) => {
         try {

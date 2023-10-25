@@ -33,11 +33,11 @@ export const columns: ColumnDef<Trade>[] = [
         accessorKey: "closeDate",
         header: () => <div className="text-right">Exit Date</div>,
         cell: ({ row }) => {
-            const date = new Date(row.getValue("closeDate"))
-
-            if (!date) {
+            if (!row.getValue("closeDate")) {
                 return <div className="text-right">-</div>
             }
+
+            const date = new Date(row.getValue("closeDate"));
 
             const formatted = new Intl.DateTimeFormat("de-DE").format(date)
 
