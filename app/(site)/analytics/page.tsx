@@ -1,6 +1,6 @@
 import getTrades from "@/actions/get-trades";
 import getUser from "@/actions/get-user";
-import { Analytics } from "@/components/analytics/Analytics";
+import { UserAnalytics } from "@/components/analytics/user-analytics";
 
 const AnalyticsPage = async () => {
     const user = await getUser();
@@ -11,7 +11,7 @@ const AnalyticsPage = async () => {
             <div className="w-full flex items-center justify-between mb-4">
                 <h1 className="text-3xl font-bold">Your Analytics</h1>
             </div>
-            <Analytics user={user!} trades={trades} />
+            <UserAnalytics user={user!} trades={trades} />
         </div>
     );
 };

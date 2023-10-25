@@ -4,16 +4,16 @@ import { DataTable } from "../table/data-table";
 import { columns } from "../table/columns";
 
 
-interface DashboardProps {
+interface UserDashboardProps {
     user: User;
     trades: Trade[];
 };
 
-export const Dashboard = ({ user, trades }: DashboardProps) => {
+export const UserDashboard = ({ user, trades }: UserDashboardProps) => {
     return (
         <>
             <Overview user={user!} />
             <DataTable columns={columns} data={trades} />
         </>
-    )
-}
+    );
+};
