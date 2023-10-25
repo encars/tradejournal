@@ -14,6 +14,12 @@ export const columns: ColumnDef<Trade>[] = [
     {
         accessorKey: "symbol",
         header: "Symbol",
+        cell: ({ row }) => {
+            const symbol: string = row.getValue("symbol");
+            return (
+                <div className="font-semibold">{symbol}</div>
+            )
+        }
     },
     {
         accessorKey: "quantity",
@@ -142,21 +148,21 @@ export const columns: ColumnDef<Trade>[] = [
 
             if (!closeDate) {
                 return <div className="text-right">-</div>
-                    }
+            }
 
-                    const duration = closeDate.getTime() - tradeDate.getTime();
+            const duration = closeDate.getTime() - tradeDate.getTime();
 
-                    const days = Math.floor(duration / (1000 * 60 * 60 * 24));
+            const days = Math.floor(duration / (1000 * 60 * 60 * 24));
 
-                    const formattedDuration = days === 1 ? `${days} day` : `${days} days`;
+            const formattedDuration = days === 1 ? `${days} day` : `${days} days`;
 
-                    return <div className="text-right">{formattedDuration}</div>
-                }
-            },
-            {
-            id: "actions",
-                cell: ({ row }) => {
-                    const trade = row.original;
+            return <div className="text-right">{formattedDuration}</div>
+        },
+    },
+    {
+        id: "actions",
+        cell: ({ row }) => {
+            const trade = row.original;
 
             return (
                 <div className="text-right">

@@ -24,6 +24,7 @@ import { Button } from "../ui/button"
 import { useState } from "react"
 import { Input } from "../ui/input"
 import { NewTrade } from "../dashboard/new-trade"
+import { cn } from "@/lib/utils"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -35,6 +36,7 @@ export function DataTable<TData, TValue>({
     data,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([]);
+    console.log(sorting)
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
     const table = useReactTable({
@@ -61,6 +63,17 @@ export function DataTable<TData, TValue>({
                     onChange={(event) => table.getColumn("symbol")?.setFilterValue(event.target.value)}
                     className="max-w-sm"
                 />
+                <div className="w-full flex items-center px-4 space-x-4">
+                    <Button onClick={() => setSorting([])} variant="outline" className={cn("w-full", !sorting.length && "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground")}>
+                        All
+                    </Button>
+                    <Button onClick={() => setSorting([{ id: "isOpen", desc: true }])} variant="outline" className={cn("w-full", sorting.some(s => s.id === "isOpen" && s.desc) && "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground")}>
+                        Open
+                    </Button>
+                    <Button onClick={() => setSorting([{ id: "isOpen", desc: false }])} variant="outline" className={cn("w-full", sorting.some(s => s.id === "isOpen" && !s.desc) && "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground")}>
+                        Closed
+                    </Button>
+                </div>
                 <NewTrade />
             </div>
             <div className="rounded-md border">

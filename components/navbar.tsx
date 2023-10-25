@@ -17,13 +17,13 @@ export const Navbar = () => {
             <div className="flex items-center">
                 <Link href="/dashboard" className="flex items-center space-x-2 mr-32">
                     <Image src="/tjLogoNoBg.png" alt="logo" width={48} height={48} className="mx-2" />
-                    <p className="text-xl font-bold">
+                    <p className="text-2xl font-bold">
                         Trade Journal
                     </p>
                 </Link>
                 <ul className="flex items-center space-x-8">
                     {navLinks.map((link) => (
-                        <Link href={link.href} key={link.key} className={cn("text-muted-foreground transition duration-300 hover:text-primary", pathname === link.href && "text-primary")}>
+                        <Link href={link.href} key={link.key} className={cn("text-muted-foreground transition duration-300 hover:text-primary", pathname === link.href && "text-primary font-semibold")}>
                             {link.label}
                         </Link>
                     ))}
