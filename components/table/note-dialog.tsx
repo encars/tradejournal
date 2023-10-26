@@ -1,4 +1,4 @@
-import { addNoteSchema, tradeSchema } from "@/lib/schema";
+import { addNoteSchema } from "@/lib/schema";
 import { DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { useForm } from "react-hook-form";
