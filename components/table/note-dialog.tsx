@@ -70,9 +70,6 @@ export const NoteDialog = ({ type, tradeId, notes, onClose }: NoteDialogProps) =
                 <DialogTitle>
                     {type === "add" ? "Add Note" : "View Note"}
                 </DialogTitle>
-                <DialogDescription>
-                    {type === "add" ? "Add a note for this trade." : "Your note for this trade."}
-                </DialogDescription>
             </DialogHeader>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -90,9 +87,6 @@ export const NoteDialog = ({ type, tradeId, notes, onClose }: NoteDialogProps) =
                                         setNote(e.target.value);
                                     }} />
                                 </FormControl>
-                                <FormDescription>
-                                    {type === "add" ? "Add a note for this trade." : "Your note for this trade."}
-                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
