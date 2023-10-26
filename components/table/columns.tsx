@@ -23,7 +23,16 @@ export const columns: ColumnDef<Trade>[] = [
     },
     {
         accessorKey: "quantity",
-        header: "Quantity",
+        header: ({ column }) => {
+            return (
+                <div>
+                    <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                        Quantity
+                        <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                </div>
+            )
+        },
     },
     {
         accessorKey: "tradeDate",
@@ -52,16 +61,7 @@ export const columns: ColumnDef<Trade>[] = [
     },
     {
         accessorKey: "isOpen",
-        header: ({ column }) => {
-            return (
-                <div className="text-right">
-                    <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                        Status
-                        <ArrowUpDown className="ml-2 h-4 w-4" />
-                    </Button>
-                </div>
-            )
-        },
+        header: () =>  <div className="text-right">Status</div>,
         cell: ({ row }) => {
             const isOpen = row.getValue("isOpen")
 

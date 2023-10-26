@@ -1,6 +1,6 @@
 import { Row } from "@tanstack/react-table"
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { MoreHorizontal, Trash2, X } from "lucide-react";
 import { useState } from "react";
@@ -45,6 +45,7 @@ export function RowActions<TData>({ row, tradeId }: RowActionsProps<TData>) {
                                 </DropdownMenuItem>
                             </DialogTrigger>
                         )}
+                        <DropdownMenuSeparator />
                         <DropdownMenuItem onClick={() => setShowDeleteDialog(true)}>
                             <Trash2 className="h-4 w-4 mr-2" />
                             Delete Trade
