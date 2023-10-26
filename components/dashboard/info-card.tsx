@@ -33,7 +33,7 @@ export const InfoCard = ({ title, value, icon: Icon, isCurrency, isPercentage, i
                 {isTime && (
                     <span className="ml-2">{value === 1 ? 'Day' : 'Days'}</span>
                 )}
-                <p className="text-muted-foreground text-sm font-normal">
+                <p className="text-muted-foreground text-sm font-normal truncate">
                     {secondaryValue >= 0 && '+'}
                     {secondaryValue}
                     {isCurrency && isCount && "€"}

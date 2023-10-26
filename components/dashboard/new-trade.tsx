@@ -1,7 +1,7 @@
 "use client";
 
 import { CalendarIcon, Loader2, Plus } from "lucide-react"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
 import { Button } from "../ui/button"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
@@ -16,38 +16,7 @@ import axios from "axios";
 import { toast } from "../ui/use-toast";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
-const tradeSchema = z.object({
-    asset: z.string().min(1, "Asset name is required").max(255),
-    symbol: z.string().min(1, "Symbol is required").max(255),
-    entryPrice: z.coerce.number().positive("Entry price must be positive").min(1, "Entry price is required"),
-    exitPrice: z.coerce.number().optional(),
-    quantity: z.coerce.number().min(1, "Quantity is required"),
-    tradeDate: z.date(),
-    closeDate: z.date().optional(),
-    pnl: z.coerce.number().optional(),
-}).superRefine((data, ctx) => {
-    if (!!data.closeDate && !data.exitPrice) {
-        ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            path: ["exitPrice"],
-            message: "Both exit price and close date must be filled, or neither.",
-        });
-    } else if (!data.closeDate && !!data.exitPrice) {
-        ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            path: ["closeDate"],
-            message: "Both exit price and close date must be filled, or neither.",
-        });
-    }
-    if (data.closeDate && data.tradeDate && data.closeDate < data.tradeDate) {
-        ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            path: ["closeDate"],
-            message: "Close date must be after trade date.",
-        });
-    }
-});
+import { tradeSchema } from "@/lib/schema";
 
 export const NewTrade = () => {
     const router = useRouter();
@@ -60,6 +29,7 @@ export const NewTrade = () => {
             symbol: "",
             entryPrice: 0,
             exitPrice: 0,
+            isOpen: true,
             quantity: 0,
             pnl: 0,
         },
@@ -281,7 +251,7 @@ export const NewTrade = () => {
                                             <PopoverContent className="w-auto p-0" align="start">
                                                 <Calendar
                                                     mode="single"
-                                                    selected={field.value}
+                                                    selected={field.value || undefined}
                                                     onSelect={field.onChange}
                                                     disabled={(date) => date > new Date() || date < new Date("1900-01-01") || date < form.watch("tradeDate")}
                                                     initialFocus

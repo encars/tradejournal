@@ -2,11 +2,9 @@
 
 import { Trade } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog";
-import deleteTrade from "@/actions/delete-trade";
+import { ArrowUpDown } from "lucide-react";
+import { RowActions } from "./row-actions";
 
 export const columns: ColumnDef<Trade>[] = [
     {
@@ -163,54 +161,7 @@ export const columns: ColumnDef<Trade>[] = [
     },
     {
         id: "actions",
-        cell: ({ row }) => {
-            const trade = row.original;
-
-            return (
-                <div className="text-right">
-                    <AlertDialog>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="h-8 w-8 p-0">
-                                    <span className="sr-only">Open menu</span>
-                                    <MoreHorizontal className="h-4 w-4" />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                {trade.isOpen && (
-                                    <DropdownMenuItem onClick={() => { }}>
-                                        Close Trade
-                                    </DropdownMenuItem>
-                                )}
-                                <AlertDialogTrigger asChild>
-                                    <DropdownMenuItem>
-                                        Delete Trade
-                                    </DropdownMenuItem>
-                                </AlertDialogTrigger>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                        <AlertDialogContent>
-                            <AlertDialogHeader>
-                                <AlertDialogTitle>
-                                    Are you sure?
-                                </AlertDialogTitle>
-                                <AlertDialogDescription>
-                                    This action cannot be undone. This will permanently delete the trade.
-                                </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                                <AlertDialogCancel>
-                                    Cancel
-                                </AlertDialogCancel>
-                                <AlertDialogAction onClick={() => {deleteTrade(trade.id); window.location.reload()}}>
-                                    Delete
-                                </AlertDialogAction>
-                            </AlertDialogFooter>
-                        </AlertDialogContent>
-                    </AlertDialog>
-                </div>
-            )
-        },
+        cell: ({ row }) => <RowActions row={row} tradeId={row.original.id} />
     },
 ]
 

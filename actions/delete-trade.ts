@@ -4,7 +4,6 @@ import axios from "axios";
 const deleteTrade = async (id: string) => {
     try {
         const res = await axios.delete(`/api/trades/${id}`);
-        console.log(res)
 
         if (res.status === 200) {
             toast({
