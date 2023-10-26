@@ -14,7 +14,7 @@ model User {
   id             String @id @default(auto()) @map("_id") @db.ObjectId
   username       String @unique
   hashedPassword String
-  capital        Float?
+  capital        Float  @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -23,7 +23,7 @@ model User {
 }
 
 model Trade {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
   entryPrice Float
   exitPrice  Float?
   asset      String
@@ -31,8 +31,8 @@ model Trade {
   quantity   Float
   tradeDate  DateTime
   closeDate  DateTime?
-  isOpen     Boolean  @default(true)
-  pnl        Float    @default(0)
+  isOpen     Boolean   @default(true)
+  pnl        Float     @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

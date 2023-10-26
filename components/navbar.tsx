@@ -21,7 +21,7 @@ export const Navbar = () => {
                         Trade Journal
                     </p>
                 </Link>
-                <ul className="flex items-center space-x-8">
+                <ul className="flex items-center space-x-16">
                     {navLinks.map((link) => (
                         <Link href={link.href} key={link.key} className={cn("text-muted-foreground transition duration-300 hover:text-primary", pathname === link.href && "text-primary font-semibold")}>
                             {link.label}

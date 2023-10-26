@@ -21,6 +21,7 @@ import { tradeSchema } from "@/lib/schema";
 export const NewTrade = () => {
     const router = useRouter();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     const form = useForm<z.infer<typeof tradeSchema>>({
         resolver: zodResolver(tradeSchema),
@@ -64,6 +65,7 @@ export const NewTrade = () => {
                     description: `Your ${values.asset} trade has been added successfully!`,
                     variant: "success"
                 });
+                setIsDialogOpen(false);
                 router.refresh();
             } else {
                 toast({
@@ -85,13 +87,11 @@ export const NewTrade = () => {
     };
 
     return (
-        <Dialog>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-                <Button variant="default">
-                    <Plus className="w-5 h-5 mr-2" />
-                    <p className="text-base">
-                        Add Trade
-                    </p>
+                <Button>
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Trade
                 </Button>
             </DialogTrigger>
             <DialogContent>

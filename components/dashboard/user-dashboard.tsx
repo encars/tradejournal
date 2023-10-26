@@ -3,7 +3,6 @@ import { Overview } from "./overview";
 import { DataTable } from "../table/data-table";
 import { columns } from "../table/columns";
 
-
 interface UserDashboardProps {
     user: User;
     trades: Trade[];

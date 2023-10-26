@@ -37,3 +37,7 @@ export const closeTradeSchema = z.object({
     exitPrice: z.coerce.number().positive("Exit price must be positive").min(1, "Exit price is required"),
     closeDate: z.date(),
 });
+
+export const addCapitalSchema = z.object({
+    amount: z.coerce.number().positive("Amount must be positive").min(1, "Amount is required"),
+});
