@@ -33,6 +33,7 @@ model Trade {
   closeDate  DateTime?
   isOpen     Boolean   @default(true)
   pnl        Float     @default(0)
+  notes      String    @default("")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

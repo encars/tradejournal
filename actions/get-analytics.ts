@@ -16,8 +16,8 @@ const getAnalytics = async (userId: string) => {
     const totalProfit = winningTrades.reduce((total, trade) => total + trade.pnl, 0);
     const totalLoss = Math.abs(losingTrades.reduce((total, trade) => total + trade.pnl, 0));
 
-    const averageWin = Number((totalProfit / winningTrades.length).toFixed(2));
-    const averageLoss = Number((totalLoss / losingTrades.length).toFixed(2));
+    const averageWin = Number((totalProfit / winningTrades.length).toFixed(2)) || 0;
+    const averageLoss = Number((totalLoss / losingTrades.length).toFixed(2)) || 0;
 
     const winPercentage = Number((winningTrades.length / closedTrades.length * 100).toFixed(2)) || 0;
     const lossPercentage = Number((losingTrades.length / closedTrades.length * 100).toFixed(2)) || 0;
@@ -27,7 +27,7 @@ const getAnalytics = async (userId: string) => {
     const numberOfTrades = trades.length;
     const numberOfClosedTrades = trades.filter(trade => !trade.isOpen).length;
 
-    const profitFactor = totalProfit / totalLoss;
+    const profitFactor = totalProfit / totalLoss || 0;
     const averagePnl = numberOfClosedTrades ? Number(((totalProfit - totalLoss) / numberOfClosedTrades).toFixed(2)) : 0;
 
     const totalHoldDuration = closedTrades.reduce((total, trade) => {

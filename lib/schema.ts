@@ -41,3 +41,7 @@ export const closeTradeSchema = z.object({
 export const addCapitalSchema = z.object({
     amount: z.coerce.number().positive("Amount must be positive").min(1, "Amount is required"),
 });
+
+export const addNoteSchema = z.object({
+    note: z.string().min(1, "Note is required"),
+});

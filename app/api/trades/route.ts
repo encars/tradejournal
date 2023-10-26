@@ -23,6 +23,7 @@ export async function POST (req: Request) {
                 closeDate,
                 pnl,
                 isOpen,
+                notes: "",
                 userId: user.id
             },
         });

@@ -161,7 +161,7 @@ export const columns: ColumnDef<Trade>[] = [
     },
     {
         id: "actions",
-        cell: ({ row }) => <RowActions row={row} tradeId={row.original.id} />
+        cell: ({ row }) => <RowActions row={row} tradeId={row.original.id} notes={row.original.notes} />
     },
 ]
 
