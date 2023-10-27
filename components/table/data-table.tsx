@@ -78,7 +78,7 @@ export function DataTable<TData, TValue>({
                         {table.getAllColumns().filter((column) => column.getCanHide()).map((column) => {
                             return (
                                 <DropdownMenuCheckboxItem key={column.id} className="capitalize" checked={column.getIsVisible()} onCheckedChange={(value) => column.toggleVisibility(!!value)}>
-                                    {column.id}
+                                    {column.id === "isOpen" ? "Status" : column.id}
                                 </DropdownMenuCheckboxItem>
                             )
                         })}
