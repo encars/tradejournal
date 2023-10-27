@@ -71,7 +71,7 @@ export function DataTable<TData, TValue>({
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="ml-4">
-                            Columns
+                            Filter Columns
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
