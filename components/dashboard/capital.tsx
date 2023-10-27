@@ -41,7 +41,7 @@ export const Capital = ({ user }: CapitalProps) => {
                 toast({
                     title: "Capital added",
                     description: `You successfully added ${values.amount} € to your account.`,
-                    variant: "success",
+                    variant: "default",
                 });
                 setIsDialogOpen(false);
                 router.refresh();

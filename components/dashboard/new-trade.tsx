@@ -63,7 +63,7 @@ export const NewTrade = () => {
                 toast({
                     title: "Trade added!",
                     description: `Your ${values.asset} trade has been added successfully!`,
-                    variant: "success"
+                    variant: "default"
                 });
                 setIsDialogOpen(false);
                 router.refresh();

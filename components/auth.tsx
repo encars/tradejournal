@@ -55,7 +55,7 @@ export const Auth = () => {
                         toast({
                             title: "Success",
                             description: "Successfully logged in",
-                            variant: "success",
+                            variant: "default",
                         });
                         router.push("/dashboard");
                     }

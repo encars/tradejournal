@@ -9,7 +9,7 @@ const deleteTrade = async (id: string) => {
             toast({
                 title: "Trade deleted",
                 description: "The trade was successfully deleted",
-                variant: "success",
+                variant: "default",
             });
         } else {
             toast({

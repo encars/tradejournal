@@ -17,7 +17,7 @@ export const DeleteDialog = ({ tradeId, isOpen, showActionToggle }: DeleteDialog
             toast({
                 title: "Trade deleted",
                 description: "The trade was successfully deleted.",
-                variant: "success"
+                variant: "default"
             });
 
             router.refresh();

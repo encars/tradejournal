@@ -41,7 +41,7 @@ export const NoteDialog = ({ type, tradeId, notes, onClose }: NoteDialogProps) =
                 toast({
                     title: "Success",
                     description: `Note ${type === "add" ? "added" : "updated"} successfully.`,
-                    variant: "success",
+                    variant: "default",
                 });
                 router.refresh();
                 onClose();

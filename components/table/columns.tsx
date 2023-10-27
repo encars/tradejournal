@@ -33,6 +33,28 @@ export const columns: ColumnDef<Trade>[] = [
                 </div>
             )
         },
+        cell: ({ row }) => {
+            const quantity = parseInt(row.getValue("quantity"));
+
+            return <div className="ml-4">{quantity}</div>
+        }
+    },
+    {
+        accessorKey: "position Size",
+        header: "Position Size",
+        cell: ({ row }) => {
+            const price = parseFloat(row.getValue("entryPrice"));
+            const quantity = parseInt(row.getValue("quantity"));
+
+            const positionSize = price * quantity;
+
+            const formatted = new Intl.NumberFormat("de-DE", {
+                style: "currency",
+                currency: "EUR",
+            }).format(positionSize);
+
+            return <div>{formatted}</div>
+        }
     },
     {
         accessorKey: "tradeDate",
@@ -120,19 +142,19 @@ export const columns: ColumnDef<Trade>[] = [
 
             if (pnl > 0) {
                 return (
-                    <div className="text-right text-green-500">
+                    <div className="mr-4 text-right text-green-500">
                         +{pnl} €
                     </div>
                 );
             } else if (pnl < 0) {
                 return (
-                    <div className="text-right text-red-500">
+                    <div className="mr-4 text-right text-red-500">
                         {pnl} €
                     </div>
                 )
             } else {
                 return (
-                    <div className="text-right">
+                    <div className="mr-4 text-right">
                         -
                     </div>
                 );

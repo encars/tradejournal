@@ -46,7 +46,7 @@ export const CloseDialog = ({ tradeId, trade, onClose }: CloseDialogProps) => {
                 toast({
                     title: "Trade closed.",
                     description: "The trade was successfully closed.",
-                    variant: "success",
+                    variant: "default",
                 });
                 router.refresh();
                 onClose();
