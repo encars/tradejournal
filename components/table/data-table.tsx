@@ -4,6 +4,7 @@ import {
     ColumnDef,
     ColumnFiltersState,
     SortingState,
+    VisibilityState,
     flexRender,
     getCoreRowModel,
     getFilteredRowModel,
@@ -26,6 +27,7 @@ import { Input } from "../ui/input"
 import { NewTrade } from "../dashboard/new-trade"
 import { cn } from "@/lib/utils"
 import { DataTablePagination } from "./data-table-pagination"
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "../ui/dropdown-menu"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -38,6 +40,7 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
     const table = useReactTable({
         data: data.reverse(),
@@ -48,9 +51,11 @@ export function DataTable<TData, TValue>({
         getSortedRowModel: getSortedRowModel(),
         onColumnFiltersChange: setColumnFilters,
         getFilteredRowModel: getFilteredRowModel(),
+        onColumnVisibilityChange: setColumnVisibility,
         state: {
             sorting,
             columnFilters,
+            columnVisibility,
         },
     });
 
@@ -63,6 +68,22 @@ export function DataTable<TData, TValue>({
                     onChange={(event) => table.getColumn("symbol")?.setFilterValue(event.target.value)}
                     className="max-w-sm"
                 />
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline" className="ml-4">
+                            Columns
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        {table.getAllColumns().filter((column) => column.getCanHide()).map((column) => {
+                            return (
+                                <DropdownMenuCheckboxItem key={column.id} className="capitalize" checked={column.getIsVisible()} onCheckedChange={(value) => column.toggleVisibility(!!value)}>
+                                    {column.id}
+                                </DropdownMenuCheckboxItem>
+                            )
+                        })}
+                    </DropdownMenuContent>
+                </DropdownMenu>
                 <div className="w-full flex items-center px-4 space-x-4">
                     <Button onClick={() => setSorting([])} variant="outline" className={cn("w-full", !sorting.length && "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground")}>
                         All
