@@ -13,8 +13,8 @@ const getAnalytics = async (userId: string) => {
     const winningTrades = closedTrades.filter(trade => trade.pnl > 0);
     const losingTrades = closedTrades.filter(trade => trade.pnl < 0);
 
-    const totalProfit = winningTrades.reduce((total, trade) => total + trade.pnl, 0);
-    const totalLoss = Math.abs(losingTrades.reduce((total, trade) => total + trade.pnl, 0));
+    const totalProfit = winningTrades.reduce((total, trade) => total + trade.pnl, 0) || 0;
+    const totalLoss = Math.abs(losingTrades.reduce((total, trade) => total + trade.pnl, 0)) || 0;
 
     const averageWin = Number((totalProfit / winningTrades.length).toFixed(2)) || 0;
     const averageLoss = Number((totalLoss / losingTrades.length).toFixed(2)) || 0;
@@ -44,6 +44,8 @@ const getAnalytics = async (userId: string) => {
     return {
         depotValue,
         numberOfTrades,
+        totalProfit,
+        totalLoss,
         averageWin,
         averageLoss,
         winPercentage,
