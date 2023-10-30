@@ -33,6 +33,25 @@ export async function PATCH (req: Request, { params }: { params: { tradeId: stri
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
+        const originalTrade = await db.trade.findUnique({
+            where: {
+                id: params.tradeId,
+            },
+        });
+
+        const positionSizeReturned = exitPrice * originalTrade!.quantity;
+
+        const updatedUser = await db.user.update({
+            where: {
+                id: user.id,
+            },
+            data: {
+                capital: {
+                    increment: positionSizeReturned,
+                },
+            },
+        });
+
         const closedTrade = await db.trade.update({
             where: {
                 id: params.tradeId,

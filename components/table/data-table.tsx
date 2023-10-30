@@ -28,15 +28,18 @@ import { NewTrade } from "../dashboard/new-trade"
 import { cn } from "@/lib/utils"
 import { DataTablePagination } from "./data-table-pagination"
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "../ui/dropdown-menu"
+import { User } from "@prisma/client"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
+    user: User
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
+    user,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -95,7 +98,7 @@ export function DataTable<TData, TValue>({
                         Closed
                     </Button>
                 </div>
-                <NewTrade />
+                <NewTrade user={user} />
             </div>
             <div className="rounded-md border">
                 <Table>

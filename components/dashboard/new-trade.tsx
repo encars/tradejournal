@@ -17,8 +17,13 @@ import { toast } from "../ui/use-toast";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { tradeSchema } from "@/lib/schema";
+import { User } from "@prisma/client";
 
-export const NewTrade = () => {
+interface NewTradeProps {
+    user: User;
+};
+
+export const NewTrade = ({ user }: NewTradeProps) => {
     const router = useRouter();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -62,7 +67,13 @@ export const NewTrade = () => {
                 form.reset();
                 toast({
                     title: "Trade added!",
-                    description: `Your ${values.asset} trade has been added successfully!`,
+                    description: (
+                        <>
+                            Your {values.asset} trade has been added successfully.
+                            <br />
+                            <span className="font-bold">{(values.quantity * values.entryPrice).toLocaleString("de-DE", { style: 'currency', currency: 'EUR' })}</span> has been deducted from your account.
+                        </>
+                    ),
                     variant: "default"
                 });
                 setIsDialogOpen(false);
@@ -74,13 +85,21 @@ export const NewTrade = () => {
                     variant: "destructive"
                 });
             }
-        } catch (error) {
-            console.error(error);
-            toast({
-                title: "Error",
-                description: "Something went wrong. Please try again later.",
-                variant: "destructive"
-            });
+        } catch (error: any) {
+            if (error.response && error.response.status === 400) {
+                toast({
+                    title: "Insufficient Funds",
+                    description: "You don't have enough funds to add this trade.",
+                    variant: "destructive"
+                });
+            } else {
+                console.error(error);
+                toast({
+                    title: "Error",
+                    description: "Something went wrong. Please try again later.",
+                    variant: "destructive"
+                });
+            }
         } finally {
             setIsSubmitting(false);
         }
@@ -96,8 +115,11 @@ export const NewTrade = () => {
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle className="text-3xl">
+                    <DialogTitle className="flex items-center justify-between text-3xl">
                         New Trade
+                        <Button variant="outline" className="mx-auto">
+                            Available Funds: <span className="ml-2 font-bold">{user.capital} €</span>
+                        </Button>
                     </DialogTitle>
                 </DialogHeader>
                 <Form {...form}>

@@ -12,7 +12,7 @@ export const UserDashboard = ({ user, trades }: UserDashboardProps) => {
     return (
         <>
             <Overview user={user!} />
-            <DataTable columns={columns} data={trades} />
+            <DataTable columns={columns} data={trades} user={user} />
         </>
     );
 };

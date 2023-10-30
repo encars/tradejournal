@@ -45,7 +45,15 @@ export const CloseDialog = ({ tradeId, trade, onClose }: CloseDialogProps) => {
                 form.reset();
                 toast({
                     title: "Trade closed.",
-                    description: "The trade was successfully closed.",
+                    description: (
+                        <>
+                            The trade has been closed successfully.
+                            <br />
+                            <span className="font-bold">{(values.exitPrice * trade.quantity).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span> has been added to your account.
+                            <br />
+                            You have made a {values.exitPrice > trade.entryPrice ? <span className="font-bold text-green-500">profit</span> : <span className="font-bold text-red-500">loss</span>} of <span className="font-bold">{(Math.abs(values.exitPrice - trade.entryPrice) * trade.quantity).toLocaleString("de-DE", { style: 'currency', currency: 'EUR' })}</span>.
+                        </>
+                    ),
                     variant: "default",
                 });
                 router.refresh();

@@ -12,6 +12,29 @@ export async function POST (req: Request) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
 
+        const userToUpdate = await db.user.findUnique({
+            where: {
+                id: user.id
+            },
+        });
+
+        const positionSize = entryPrice * quantity;
+
+        if (userToUpdate!.capital < positionSize) {
+            return new NextResponse("Insufficient Capital", { status: 400 });
+        }
+
+        const updatedUser = await db.user.update({
+            where: {
+                id: user.id
+            },
+            data: {
+                capital: {
+                    decrement: positionSize
+                }
+            }
+        })
+
         const trade = await db.trade.create({
             data: {
                 asset,
