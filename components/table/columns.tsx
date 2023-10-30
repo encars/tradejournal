@@ -141,15 +141,25 @@ export const columns: ColumnDef<Trade>[] = [
             const pnl = parseFloat(row.getValue("pnl")) || 0;
 
             if (pnl > 0) {
+                const formattedPnl = new Intl.NumberFormat("de-DE", {
+                    style: "currency",
+                    currency: "EUR",
+                }).format(pnl);
+
                 return (
                     <div className="mr-4 text-right text-green-500">
-                        +{pnl} €
+                        +{formattedPnl}
                     </div>
                 );
             } else if (pnl < 0) {
+                const formattedPnl = new Intl.NumberFormat("de-DE", {
+                    style: "currency",
+                    currency: "EUR",
+                }).format(pnl);
+
                 return (
                     <div className="mr-4 text-right text-red-500">
-                        {pnl} €
+                        {formattedPnl}
                     </div>
                 )
             } else {
