@@ -40,7 +40,11 @@ export const Capital = ({ user }: CapitalProps) => {
                 form.reset();
                 toast({
                     title: "Capital added",
-                    description: `You successfully added ${values.amount} € to your account.`,
+                    description: (
+                        <>
+                            You successfully added <span className="font-bold">{values.amount.toLocaleString("de-DE")} €</span> to your account.
+                        </>
+                    ),
                     variant: "default",
                 });
                 setIsDialogOpen(false);
