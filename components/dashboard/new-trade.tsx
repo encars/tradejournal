@@ -118,7 +118,7 @@ export const NewTrade = ({ user }: NewTradeProps) => {
                     <DialogTitle className="flex items-center justify-between text-3xl">
                         New Trade
                         <Button variant="outline" className="mx-auto">
-                            Available Funds: <span className="ml-2 font-bold">{user.capital} €</span>
+                            Available Funds: <span className="ml-2 font-bold">{user.capital.toLocaleString("de-DE", { style: 'currency', currency: 'EUR' })}</span>
                         </Button>
                     </DialogTitle>
                 </DialogHeader>
