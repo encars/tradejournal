@@ -1,4 +1,3 @@
-import getTrades from "@/actions/get-trades";
 import getUser from "@/actions/get-user";
 import { UserAnalytics } from "@/components/analytics/user-analytics";
 
