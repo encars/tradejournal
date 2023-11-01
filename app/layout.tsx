@@ -1,11 +1,9 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 import { Toaster } from '@/components/ui/toaster'
 import { Providers } from '@/lib/providers'
 import { ThemeProvider } from '@/components/theme-provider'
-
-const inter = Inter({ subsets: ['latin'] })
+import { GeistSans, GeistMono } from 'geist/font'
 
 export const metadata: Metadata = {
 	title: 'Trade Journal',
@@ -19,7 +17,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body className={inter.className}>
+			<body className={GeistSans.className}>
 				<Providers>
 					<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
 						<main className="h-screen">
