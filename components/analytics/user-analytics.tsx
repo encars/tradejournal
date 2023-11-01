@@ -3,6 +3,8 @@ import { User } from "@prisma/client"
 import { InfoCard } from "../dashboard/info-card";
 import { ArrowDownRight, ArrowUpRight, Award, Calculator, CandlestickChart, PieChart, Timer, TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import { Summary } from "./summary";
+import { TradeStats } from "./trade-stats";
+import { getLargestLoss, getLargestPositionSize, getLargestWin, getLongestOpenTrade } from "@/actions/get-notable-trades";
 
 interface UserAnalyticsProps {
     user: User;
@@ -22,10 +24,15 @@ export const UserAnalytics = async ({ user }: UserAnalyticsProps) => {
         averageHoldTime,
     } = await getAnalytics(user.id);
 
+    const largestWin = await getLargestWin(user.id);
+    const largestLoss = await getLargestLoss(user.id);
+    const largestPositionSize = await getLargestPositionSize(user.id);
+    const longestTrade = await getLongestOpenTrade(user.id);
+
     return (
         <>
             <Summary />
-            <div className="w-full grid grid-cols-5 gap-4">
+            <div className="w-full grid grid-cols-5 gap-4 mb-4">
                 <InfoCard title="Depot Value" value={depotValue} icon={Wallet} secondaryValue={12.2} isCurrency />
                 <InfoCard title="Total Trades" value={numberOfTrades} icon={CandlestickChart} secondaryValue={3} isCount />
                 <InfoCard title="Total Profit" value={totalProfit} icon={ArrowUpRight} secondaryValue={4356} isCurrency isCount />
@@ -37,6 +44,7 @@ export const UserAnalytics = async ({ user }: UserAnalyticsProps) => {
                 <InfoCard title="Average Loss" value={averageLoss} icon={TrendingDown} secondaryValue={840.32} isCurrency isCount />
                 <InfoCard title="Profit Factor" value={profitFactor} icon={Calculator} secondaryValue={0.11} isCount />
             </div>
+            <TradeStats largestWin={largestWin} largestLoss={largestLoss} largestPositionSize={largestPositionSize} longestTrade={longestTrade} />
         </>
     );
 };
