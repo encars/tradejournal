@@ -29,20 +29,28 @@ export const TradeStats = ({ largestWin, largestLoss, largestPositionSize, longe
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="flex items-center justify-between text-xl truncate mb-4">
-                                <p>
-                                    {largestWin?.symbol}
+                            {largestWin ? (
+                                <>
+                                    <div className="flex items-center justify-between text-xl truncate mb-4">
+                                        <p>
+                                            {largestWin?.symbol}
+                                        </p>
+                                        <p>
+                                            @ {largestWin?.entryPrice.toLocaleString('de-DE', germanCurrency)}
+                                        </p>
+                                        <p>
+                                            x {largestWin?.quantity}
+                                        </p>
+                                    </div>
+                                    <p className="text-center text-green-500 font-bold text-3xl">
+                                        +{largestWin ? largestWin.pnl.toLocaleString('de-DE', germanCurrency) : 0}
+                                    </p>
+                                </>
+                            ) : (
+                                <p className="text-center mt-6 mb-6">
+                                    No wins yet
                                 </p>
-                                <p>
-                                    @ {largestWin?.entryPrice.toLocaleString('de-DE', germanCurrency)}
-                                </p>
-                                <p>
-                                    x {largestWin?.quantity}
-                                </p>
-                            </div>
-                            <p className="text-center text-green-500 font-bold text-3xl">
-                                +{largestWin ? largestWin.pnl.toLocaleString('de-DE', germanCurrency) : 0}
-                            </p>
+                            )}
                         </CardContent>
                     </Card>
                     <Card>
@@ -52,20 +60,28 @@ export const TradeStats = ({ largestWin, largestLoss, largestPositionSize, longe
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="flex items-center justify-between text-xl truncate mb-4">
-                                <p>
-                                    {largestLoss?.symbol}
+                            {largestLoss ? (
+                                <>
+                                    <div className="flex items-center justify-between text-xl truncate mb-4">
+                                        <p>
+                                            {largestLoss?.symbol}
+                                        </p>
+                                        <p>
+                                            @ {largestLoss?.entryPrice.toLocaleString('de-DE', germanCurrency)}
+                                        </p>
+                                        <p>
+                                            x {largestLoss?.quantity}
+                                        </p>
+                                    </div>
+                                    <p className="text-center text-red-500 font-bold text-3xl">
+                                        {largestLoss ? largestLoss.pnl.toLocaleString('de-DE', germanCurrency) : 0}
+                                    </p>
+                                </>
+                            ) : (
+                                <p className="text-center mt-6 mb-6">
+                                    No losses yet
                                 </p>
-                                <p>
-                                    @ {largestLoss?.entryPrice.toLocaleString('de-DE', germanCurrency)}
-                                </p>
-                                <p>
-                                    x {largestLoss?.quantity}
-                                </p>
-                            </div>
-                            <p className="text-center text-red-500 font-bold text-3xl">
-                                {largestLoss ? largestLoss.pnl.toLocaleString('de-DE', germanCurrency) : 0}
-                            </p>
+                            )}
                         </CardContent>
                     </Card>
                     <Card>
@@ -75,20 +91,29 @@ export const TradeStats = ({ largestWin, largestLoss, largestPositionSize, longe
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="flex items-center justify-between text-xl truncate mb-4">
-                                <p>
-                                    {largestPositionSize?.symbol}
+                            {largestPositionSize ? (
+                                <>
+                                    <div className="flex items-center justify-between text-xl truncate mb-4">
+                                        <p>
+                                            {largestPositionSize?.symbol}
+                                        </p>
+                                        <p>
+                                            @ {largestPositionSize?.entryPrice.toLocaleString('de-DE', germanCurrency)}
+                                        </p>
+                                        <p>
+                                            x {largestPositionSize?.quantity}
+                                        </p>
+                                    </div>
+                                    <p className="text-center font-bold text-3xl">
+                                        {largestPositionValue.toLocaleString('de-DE', germanCurrency)}
+                                    </p>
+
+                                </>
+                            ) : (
+                                <p className="text-center mt-6 mb-6">
+                                    No positions yet
                                 </p>
-                                <p>
-                                    @ {largestPositionSize?.entryPrice.toLocaleString('de-DE', germanCurrency)}
-                                </p>
-                                <p>
-                                    x {largestPositionSize?.quantity}
-                                </p>
-                            </div>
-                            <p className="text-center font-bold text-3xl">
-                                {largestPositionValue.toLocaleString('de-DE', germanCurrency)}
-                            </p>
+                            )}
                         </CardContent>
                     </Card>
                     <Card>
@@ -98,20 +123,29 @@ export const TradeStats = ({ largestWin, largestLoss, largestPositionSize, longe
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="flex items-center justify-between text-xl truncate mb-4">
-                                <p>
-                                    {longestTrade?.symbol}
+                            {longestTrade ? (
+                                <>
+                                    <div className="flex items-center justify-between text-xl truncate mb-4">
+                                        <p>
+                                            {longestTrade?.symbol}
+                                        </p>
+                                        <p>
+                                            @ {longestTrade?.entryPrice.toLocaleString('de-DE', germanCurrency)}
+                                        </p>
+                                        <p>
+                                            x {longestTrade?.quantity}
+                                        </p>
+                                    </div>
+                                    <p className="text-center font-bold text-3xl">
+                                        {(longestTradeDuration / 86400000).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} days
+                                    </p>
+
+                                </>
+                            ) : (
+                                <p className="text-center mt-6 mb-6">
+                                    No trades yet
                                 </p>
-                                <p>
-                                    @ {longestTrade?.entryPrice.toLocaleString('de-DE', germanCurrency)}
-                                </p>
-                                <p>
-                                    x {longestTrade?.quantity}
-                                </p>
-                            </div>
-                            <p className="text-center font-bold text-3xl">
-                                {(longestTradeDuration / 86400000).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} days
-                            </p>
+                            )}
                         </CardContent>
                     </Card>
                 </div>
